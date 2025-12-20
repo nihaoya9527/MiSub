@@ -1,6 +1,11 @@
-FROM node:20-alpine
+FROM node:20-slim
 
 WORKDIR /app
+
+# 安装必要的依赖
+RUN apt-get update && apt-get install -y \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
 
 # 复制依赖文件
 COPY package*.json ./
@@ -20,4 +25,5 @@ EXPOSE 3200
 # 使用 Wrangler 运行
 CMD ["npx", "wrangler", "pages", "dev", "dist", \
     "--port=3200", \
-    "--persist-to=.wrangler/state"]
+    "--persist-to=.wrangler/state", \
+    "--compatibility-date=2025-12-20"]
