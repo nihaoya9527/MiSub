@@ -1,0 +1,13 @@
+version: '3.8'
+
+services:
+  misub:
+    image: ghcr.io/imzyb/misub:latest
+    container_name: misub
+    ports:
+      - "3200:3200"
+    volumes:
+      - ./data:/app/.wrangler/state
+    environment:
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD:-change_this_password}
+    restart: unless-stopped
